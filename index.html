@@ -1,323 +1,347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MelonTec Cloud — Futuristic Secure Cloud Demo</title>
+<title>MelonTec Cloud Demo</title>
 <style>
-/* =================== Reset & Base =================== */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-html, body { height: 100%; width: 100%; background: #0b0b0f; color: #e7edef; }
-button { cursor: pointer; border: none; outline: none; }
-a { color: inherit; text-decoration: none; }
-
-/* =================== Glassmorphism Background =================== */
-.bg-glass {
-  background: rgba(15,15,20,0.6);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+:root {
+  --bg: #0b0b0c;
+  --panel: rgba(20,20,20,0.8);
+  --accent: #5fe0c8;
+  --accent-hover: #3ac9b2;
+  --text: #e7edef;
+  --muted: #9ea3a8;
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+body{
+  background: linear-gradient(180deg,#0b0b0c,#111214);
+  color: var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:20px;
+}
+.container{
+  width:100%;
+  max-width:1200px;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 24px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.header h1{
+  font-size:20px;
+  color: var(--accent);
+}
+.nav-btns button{
+  background:none;
+  border:none;
+  color: var(--text);
+  padding:8px 12px;
+  border-radius: var(--radius);
+  cursor:pointer;
+  transition:0.2s;
+}
+.nav-btns button:hover{
+  background: rgba(95,224,200,0.1);
 }
 
-/* =================== Header =================== */
-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 16px 32px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
-  position: sticky; top: 0; z-index: 999;
+/* Auth Modal */
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
 }
-header h1 { font-weight: 800; font-size: 24px; color: #5fe0c8; letter-spacing: 1px; }
-header .nav { display: flex; gap: 16px; }
-header .nav button { padding: 8px 16px; border-radius: 10px; background: #5fe0c8; color: #0b0b0f; font-weight: 700; transition: 0.2s; }
-header .nav button:hover { transform: translateY(-3px); }
+.modal{
+  background: var(--panel);
+  padding:24px;
+  border-radius: var(--radius);
+  width:100%;
+  max-width:400px;
+  box-shadow: var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.modal h2{
+  color: var(--accent);
+  text-align:center;
+}
+.modal input{
+  padding:10px 12px;
+  border-radius: var(--radius);
+  border:none;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+.modal button{
+  padding:12px;
+  border:none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color:#04221f;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.2s;
+}
+.modal button:hover{
+  background: var(--accent-hover);
+}
 
-/* =================== Container =================== */
-.container { max-width: 1200px; margin: 32px auto; padding: 0 16px; }
+/* Cloud Content */
+.cloud-content{
+  padding:24px;
+  display:none;
+  flex-direction:column;
+  gap:20px;
+}
+.tabs{
+  display:flex;
+  gap:12px;
+  margin-bottom:16px;
+}
+.tabs button{
+  background:none;
+  border:none;
+  padding:8px 16px;
+  border-radius: var(--radius);
+  cursor:pointer;
+  color: var(--muted);
+  font-weight:700;
+  transition:0.2s;
+}
+.tabs button.active{
+  background: var(--accent);
+  color:#04221f;
+}
+.tab-content{
+  background: rgba(255,255,255,0.03);
+  padding:16px;
+  border-radius: var(--radius);
+  min-height:200px;
+}
+.upload-area{
+  border:2px dashed var(--accent);
+  padding:20px;
+  border-radius: var(--radius);
+  text-align:center;
+  cursor:pointer;
+}
+.file-list{
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.file-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background: rgba(255,255,255,0.05);
+  padding:8px 12px;
+  border-radius: var(--radius);
+}
+.file-item button{
+  background: var(--accent);
+  border:none;
+  padding:4px 8px;
+  border-radius: var(--radius);
+  cursor:pointer;
+  color:#04221f;
+  font-size:12px;
+  transition:0.2s;
+}
+.file-item button:hover{
+  background: var(--accent-hover);
+}
 
-/* =================== Forms =================== */
-form { display: flex; flex-direction: column; gap: 12px; width: 320px; margin: 60px auto; }
-input { padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.03); color: #e7edef; }
-input::placeholder { color: rgba(255,255,255,0.5); }
-button.primary { background: #5fe0c8; color: #0b0b0f; font-weight: 700; padding: 12px; border-radius: 10px; transition: 0.2s; }
-button.primary:hover { transform: translateY(-3px); }
-
-/* =================== Tabs =================== */
-.tabs { display: flex; gap: 12px; margin-bottom: 24px; }
-.tabs button { flex: 1; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.03); color: #e7edef; font-weight: 600; transition: 0.2s; }
-.tabs button.active { background: #5fe0c8; color: #0b0b0f; }
-
-/* =================== Content Panels =================== */
-.panel { display: none; }
-.panel.active { display: block; }
-.panel .section { margin-bottom: 24px; }
-.panel .section h2 { margin-bottom: 12px; color: #5fe0c8; }
-.panel .section textarea { width: 100%; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.03); color: #e7edef; border: 1px solid rgba(255,255,255,0.2); resize: none; }
-.panel .section input[type="file"] { display: block; }
-.panel .section .list-item { padding: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.02); border-radius: 8px; }
-
-/* =================== Footer =================== */
-footer { text-align: center; padding: 24px; font-size: 14px; color: rgba(255,255,255,0.5); }
-
-/* =================== Animations =================== */
-.fade-in { animation: fadeIn 0.5s forwards; opacity: 0; }
-@keyframes fadeIn { to { opacity: 1; } }
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  background: var(--accent);
+  color:#04221f;
+  padding:12px 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  opacity:0;
+  animation:toastin 0.4s forwards, toastout 0.4s 2.4s forwards;
+}
+@keyframes toastin{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes toastout{from{opacity:1;transform:translateY(0);}to{opacity:0;transform:translateY(-20px);}}
 </style>
 </head>
 <body>
 
-<header class="bg-glass">
-  <h1>MelonTec Cloud</h1>
-  <div class="nav">
-    <button id="btnLogin">Login</button>
-    <button id="btnSignup">Create Account</button>
-  </div>
-</header>
-
-<div class="container" id="authContainer">
-  <!-- LOGIN FORM -->
-  <form id="loginForm" class="fade-in">
-    <h2>Login</h2>
-    <input type="text" id="loginUser" placeholder="Username" required>
-    <input type="password" id="loginPass" placeholder="Password" required>
-    <button class="primary" type="submit">Login</button>
-  </form>
-
-  <!-- SIGNUP FORM -->
-  <form id="signupForm" class="fade-in" style="display:none;">
-    <h2>Create Account</h2>
-    <input type="text" id="signupUser" placeholder="Username" required>
-    <input type="password" id="signupPass" placeholder="Password" required>
-    <input type="email" id="signupEmail" placeholder="Email" required>
-    <button class="primary" type="submit">Sign Up</button>
-  </form>
-</div>
-
-<!-- DASHBOARD -->
-<div class="container" id="dashboard" style="display:none;">
-  <div class="tabs">
-    <button class="active" data-tab="photos">Fotos</button>
-    <button data-tab="notes">Notizen</button>
-    <button data-tab="mail">MelMail</button>
-    <button data-tab="files">MelDat</button>
-    <button data-tab="settings">Einstellungen</button>
-  </div>
-
-  <!-- Fotos -->
-  <div class="panel active" id="photos">
-    <div class="section">
-      <h2>Fotos</h2>
-      <input type="file" id="photoInput" multiple>
-      <div id="photoList"></div>
+<div class="container">
+  <div class="header">
+    <h1>MelonTec Cloud</h1>
+    <div class="nav-btns">
+      <button id="loginBtn">Login</button>
+      <button id="registerBtn">Account erstellen</button>
+      <button id="settingsBtn" style="display:none;">Einstellungen</button>
     </div>
   </div>
 
-  <!-- Notizen -->
-  <div class="panel" id="notes">
-    <div class="section">
-      <h2>Notizen</h2>
-      <textarea id="noteInput" placeholder="Neue Notiz..." rows="4"></textarea>
-      <button class="primary" id="saveNote">Speichern</button>
-      <div id="noteList"></div>
+  <div class="cloud-content">
+    <div class="tabs">
+      <button class="active" data-tab="photos">Fotos</button>
+      <button data-tab="notes">Notizen</button>
+      <button data-tab="melmail">MelMail</button>
+      <button data-tab="meldat">melDat</button>
     </div>
-  </div>
-
-  <!-- MelMail -->
-  <div class="panel" id="mail">
-    <div class="section">
-      <h2>MelMail</h2>
-      <input type="text" id="mailInput" placeholder="Neue Mail">
-      <button class="primary" id="sendMail">Senden</button>
-      <div id="mailList"></div>
-    </div>
-  </div>
-
-  <!-- MelDat -->
-  <div class="panel" id="files">
-    <div class="section">
-      <h2>MelDat (Dateien)</h2>
-      <input type="file" id="fileInput" multiple>
-      <div id="fileList"></div>
-    </div>
-  </div>
-
-  <!-- Einstellungen -->
-  <div class="panel" id="settings">
-    <div class="section">
-      <h2>Einstellungen</h2>
-      <label><input type="checkbox" id="toggle2FA"> 2FA aktivieren (Demo)</label>
-      <div id="twoFAStatus" style="margin-top:8px; color:#5fe0c8;"></div>
+    <div class="tab-content" id="tabContent">
+      <!-- default: Fotos -->
+      <p>Hier werden deine Fotos angezeigt.</p>
     </div>
   </div>
 </div>
 
-<footer>
-  &copy; 2025 MelonTec. All rights reserved.
-</footer>
+<!-- Auth Modal -->
+<div class="modal-bg" id="authModal">
+  <div class="modal" id="modalContent">
+    <h2 id="modalTitle">Login</h2>
+    <input type="text" id="username" placeholder="Benutzername">
+    <input type="password" id="password" placeholder="Passwort">
+    <button id="authSubmit">Einloggen</button>
+    <small id="twoFAInfo" style="color:var(--muted); display:none;">2FA aktiviert</small>
+  </div>
+</div>
 
 <script>
-/* ================= AUTH ================= */
-const authContainer = document.getElementById('authContainer');
-const loginForm = document.getElementById('loginForm');
-const signupForm = document.getElementById('signupForm');
-const dashboard = document.getElementById('dashboard');
-
-document.getElementById('btnLogin').addEventListener('click', ()=>{
-  loginForm.style.display='flex'; signupForm.style.display='none';
-});
-document.getElementById('btnSignup').addEventListener('click', ()=>{
-  loginForm.style.display='none'; signupForm.style.display='flex';
-});
-
-/* ================= USERS ================= */
-function saveUser(username, pass, email){
-  const users = JSON.parse(localStorage.getItem('mtUsers')||'{}');
-  users[username] = {password: pass, email, notes: [], photos: [], mails: [], files: [], twoFA:false};
-  localStorage.setItem('mtUsers', JSON.stringify(users));
-}
-function getUser(username){
-  const users = JSON.parse(localStorage.getItem('mtUsers')||'{}');
-  return users[username];
-}
-
-/* ================= SIGNUP ================= */
-signupForm.addEventListener('submit', e=>{
-  e.preventDefault();
-  const u = document.getElementById('signupUser').value;
-  const p = document.getElementById('signupPass').value;
-  const eMail = document.getElementById('signupEmail').value;
-  saveUser(u,p,eMail);
-  alert('Account erstellt! Bitte einloggen.');
-  loginForm.style.display='flex'; signupForm.style.display='none';
-});
-
-/* ================= LOGIN ================= */
-loginForm.addEventListener('submit', e=>{
-  e.preventDefault();
-  const u = document.getElementById('loginUser').value;
-  const p = document.getElementById('loginPass').value;
-  const user = getUser(u);
-  if(user && user.password===p){
-    authContainer.style.display='none';
-    dashboard.style.display='block';
-    currentUser = u;
-    loadDashboard();
-  } else alert('Ungültiger Benutzer oder Passwort!');
-});
-
-/* ================= DASHBOARD ================= */
+// ----- Simple Demo Auth -----
 let currentUser = null;
+let twoFAEnabled = false;
+const authModal = document.getElementById('authModal');
+const modalTitle = document.getElementById('modalTitle');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const authSubmit = document.getElementById('authSubmit');
+const settingsBtn = document.getElementById('settingsBtn');
+
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  modalTitle.innerText='Login';
+  authSubmit.innerText='Einloggen';
+  document.getElementById('twoFAInfo').style.display='none';
+  authModal.style.display='flex';
+});
+document.getElementById('registerBtn').addEventListener('click', ()=>{
+  modalTitle.innerText='Account erstellen';
+  authSubmit.innerText='Registrieren';
+  document.getElementById('twoFAInfo').style.display='none';
+  authModal.style.display='flex';
+});
+authSubmit.addEventListener('click', ()=>{
+  const user = usernameInput.value.trim();
+  const pass = passwordInput.value.trim();
+  if(!user||!pass){alert('Bitte fülle alle Felder aus.');return;}
+  currentUser = user;
+  localStorage.setItem('mtcloud_user',JSON.stringify({user:user,files:[]})); 
+  authModal.style.display='none';
+  document.querySelector('.cloud-content').style.display='flex';
+  settingsBtn.style.display='inline-block';
+  toast(`Willkommen, ${user}!`);
+  usernameInput.value=''; passwordInput.value='';
+  loadTab('photos');
+});
+
+// ----- Settings & 2FA (simuliert) -----
+settingsBtn.addEventListener('click', ()=>{
+  const enable2FA = confirm('2FA aktivieren? (Demo simuliert)');
+  twoFAEnabled = enable2FA;
+  document.getElementById('twoFAInfo').style.display = twoFAEnabled ? 'block' : 'none';
+  toast(`2FA ${twoFAEnabled?'aktiviert':'deaktiviert'}`);
+});
+
+// ----- Tabs -----
 const tabs = document.querySelectorAll('.tabs button');
-const panels = document.querySelectorAll('.panel');
 tabs.forEach(tab=>{
-  tab.addEventListener('click', ()=>{
+  tab.addEventListener('click',()=>{
     tabs.forEach(t=>t.classList.remove('active'));
-    panels.forEach(p=>p.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
+    loadTab(tab.dataset.tab);
   });
 });
-
-function loadDashboard(){
-  const user = getUser(currentUser);
-  updateNotes(user.notes);
-  updateMails(user.mails);
-  updateFiles(user.files);
-  updatePhotos(user.photos);
-  document.getElementById('toggle2FA').checked = user.twoFA;
-  document.getElementById('twoFAStatus').textContent = user.twoFA ? '2FA aktiviert' : '2FA deaktiviert';
-}
-
-/* ================= NOTES ================= */
-document.getElementById('saveNote').addEventListener('click', ()=>{
-  const noteInput = document.getElementById('noteInput');
-  const text = noteInput.value.trim();
-  if(!text) return;
-  const user = getUser(currentUser);
-  user.notes.push(text);
-  saveUser(currentUser, user.password, user.email);
-  noteInput.value='';
-  updateNotes(user.notes);
-});
-function updateNotes(notes){
-  const list = document.getElementById('noteList');
-  list.innerHTML='';
-  notes.forEach(n=>{
-    const div = document.createElement('div');
-    div.textContent=n; div.className='list-item';
-    list.appendChild(div);
-  });
-}
-
-/* ================= MAIL ================= */
-document.getElementById('sendMail').addEventListener('click', ()=>{
-  const mailInput = document.getElementById('mailInput');
-  const text = mailInput.value.trim();
-  if(!text) return;
-  const user = getUser(currentUser);
-  user.mails.push(text);
-  saveUser(currentUser, user.password, user.email);
-  mailInput.value='';
-  updateMails(user.mails);
-});
-function updateMails(mails){
-  const list = document.getElementById('mailList');
-  list.innerHTML='';
-  mails.forEach(m=>{
-    const div = document.createElement('div');
-    div.textContent=m; div.className='list-item';
-    list.appendChild(div);
-  });
-}
-
-/* ================= FILES ================= */
-document.getElementById('fileInput').addEventListener('change', e=>{
-  const files = e.target.files;
-  const user = getUser(currentUser);
-  for(const f of files){
-    user.files.push(f.name);
+const tabContent = document.getElementById('tabContent');
+function loadTab(tab){
+  if(tab==='photos'){
+    tabContent.innerHTML='<p>Hier werden deine Fotos angezeigt.</p>';
+  }else if(tab==='notes'){
+    tabContent.innerHTML='<p>Hier kannst du deine Notizen erstellen.</p>';
+  }else if(tab==='melmail'){
+    tabContent.innerHTML='<p>Hier wird deine MelMail angezeigt.</p>';
+  }else if(tab==='meldat'){
+    tabContent.innerHTML=`<div class="upload-area" id="uploadArea">Dateien hierhin ziehen oder klicken</div>
+    <div class="file-list" id="fileList"></div>`;
+    initFileUpload();
   }
-  saveUser(currentUser, user.password, user.email);
-  updateFiles(user.files);
-});
-function updateFiles(files){
-  const list = document.getElementById('fileList');
-  list.innerHTML='';
-  files.forEach(f=>{
-    const div = document.createElement('div');
-    div.textContent=f; div.className='list-item';
-    list.appendChild(div);
-  });
 }
 
-/* ================= PHOTOS ================= */
-document.getElementById('photoInput').addEventListener('change', e=>{
-  const files = e.target.files;
-  const user = getUser(currentUser);
-  for(const f of files){
-    user.photos.push(f.name);
+// ----- File Upload -----
+function initFileUpload(){
+  const uploadArea = document.getElementById('uploadArea');
+  const fileList = document.getElementById('fileList');
+  let userData = JSON.parse(localStorage.getItem('mtcloud_user')) || {files:[]};
+
+  uploadArea.addEventListener('click',()=>{ 
+    const input = document.createElement('input'); input.type='file'; input.multiple=true;
+    input.onchange=e=>handleFiles(e.target.files); input.click();
+  });
+  uploadArea.addEventListener('dragover',e=>{e.preventDefault(); uploadArea.style.background='rgba(95,224,200,0.2)';});
+  uploadArea.addEventListener('dragleave',e=>{uploadArea.style.background='none';});
+  uploadArea.addEventListener('drop',e=>{e.preventDefault(); uploadArea.style.background='none'; handleFiles(e.dataTransfer.files);});
+
+  function handleFiles(files){
+    Array.from(files).forEach(file=>{
+      const reader = new FileReader();
+      reader.onload = (e)=>{
+        userData.files.push({name:file.name,data:e.target.result,type:file.type});
+        renderFiles();
+        localStorage.setItem('mtcloud_user',JSON.stringify(userData));
+        toast(`Datei "${file.name}" hochgeladen!`);
+      };
+      reader.readAsDataURL(file);
+    });
   }
-  saveUser(currentUser, user.password, user.email);
-  updatePhotos(user.photos);
-});
-function updatePhotos(photos){
-  const list = document.getElementById('photoList');
-  list.innerHTML='';
-  photos.forEach(p=>{
-    const div = document.createElement('div');
-    div.textContent=p; div.className='list-item';
-    list.appendChild(div);
-  });
+
+  function renderFiles(){
+    fileList.innerHTML='';
+    userData.files.forEach((f,i)=>{
+      const div = document.createElement('div'); div.className='file-item';
+      div.innerHTML=`<span>${f.name}</span><button onclick="downloadFile(${i})">Download</button>`;
+      fileList.appendChild(div);
+    });
+  }
+  window.downloadFile = function(i){
+    const f = userData.files[i];
+    const a = document.createElement('a');
+    a.href=f.data; a.download=f.name; a.click();
+  }
+  renderFiles();
 }
 
-/* ================= 2FA ================= */
-document.getElementById('toggle2FA').addEventListener('change', e=>{
-  const user = getUser(currentUser);
-  user.twoFA = e.target.checked;
-  saveUser(currentUser, user.password, user.email);
-  document.getElementById('twoFAStatus').textContent = user.twoFA ? '2FA aktiviert' : '2FA deaktiviert';
-});
+// ----- Toast -----
+function toast(msg){
+  const t = document.createElement('div'); t.className='toast'; t.innerText=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>document.body.removeChild(t),3000);
+}
 </script>
-
 </body>
 </html>
