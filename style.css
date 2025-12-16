@@ -1,0 +1,77 @@
+/* Globale Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #cfe9ff, #d9d9d9);
+    backdrop-filter: blur(12px);
+    color: #333;
+}
+
+/* Container */
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.app-card {
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Header und Account-Button */
+header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+}
+.account-btn button {
+    background-color: #888;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Login / Register Container */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
+.login-container input {
+    margin: 10px;
+    padding: 12px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.login-container button {
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.login-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* App Card Animation */
+.app-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
