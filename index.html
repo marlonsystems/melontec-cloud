@@ -1,347 +1,37 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MelonTec Cloud Demo</title>
-<style>
-:root {
-  --bg: #0b0b0c;
-  --panel: rgba(20,20,20,0.8);
-  --accent: #5fe0c8;
-  --accent-hover: #3ac9b2;
-  --text: #e7edef;
-  --muted: #9ea3a8;
-  --radius: 12px;
-  --shadow: 0 8px 24px rgba(0,0,0,0.6);
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-body{
-  background: linear-gradient(180deg,#0b0b0c,#111214);
-  color: var(--text);
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:20px;
-}
-.container{
-  width:100%;
-  max-width:1200px;
-  background: var(--panel);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-}
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 24px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.header h1{
-  font-size:20px;
-  color: var(--accent);
-}
-.nav-btns button{
-  background:none;
-  border:none;
-  color: var(--text);
-  padding:8px 12px;
-  border-radius: var(--radius);
-  cursor:pointer;
-  transition:0.2s;
-}
-.nav-btns button:hover{
-  background: rgba(95,224,200,0.1);
-}
-
-/* Auth Modal */
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background: rgba(0,0,0,0.8);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-}
-.modal{
-  background: var(--panel);
-  padding:24px;
-  border-radius: var(--radius);
-  width:100%;
-  max-width:400px;
-  box-shadow: var(--shadow);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.modal h2{
-  color: var(--accent);
-  text-align:center;
-}
-.modal input{
-  padding:10px 12px;
-  border-radius: var(--radius);
-  border:none;
-  background: rgba(255,255,255,0.05);
-  color: var(--text);
-}
-.modal button{
-  padding:12px;
-  border:none;
-  border-radius: var(--radius);
-  background: var(--accent);
-  color:#04221f;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.2s;
-}
-.modal button:hover{
-  background: var(--accent-hover);
-}
-
-/* Cloud Content */
-.cloud-content{
-  padding:24px;
-  display:none;
-  flex-direction:column;
-  gap:20px;
-}
-.tabs{
-  display:flex;
-  gap:12px;
-  margin-bottom:16px;
-}
-.tabs button{
-  background:none;
-  border:none;
-  padding:8px 16px;
-  border-radius: var(--radius);
-  cursor:pointer;
-  color: var(--muted);
-  font-weight:700;
-  transition:0.2s;
-}
-.tabs button.active{
-  background: var(--accent);
-  color:#04221f;
-}
-.tab-content{
-  background: rgba(255,255,255,0.03);
-  padding:16px;
-  border-radius: var(--radius);
-  min-height:200px;
-}
-.upload-area{
-  border:2px dashed var(--accent);
-  padding:20px;
-  border-radius: var(--radius);
-  text-align:center;
-  cursor:pointer;
-}
-.file-list{
-  margin-top:12px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.file-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background: rgba(255,255,255,0.05);
-  padding:8px 12px;
-  border-radius: var(--radius);
-}
-.file-item button{
-  background: var(--accent);
-  border:none;
-  padding:4px 8px;
-  border-radius: var(--radius);
-  cursor:pointer;
-  color:#04221f;
-  font-size:12px;
-  transition:0.2s;
-}
-.file-item button:hover{
-  background: var(--accent-hover);
-}
-
-/* Toast */
-.toast{
-  position:fixed;
-  bottom:24px;
-  right:24px;
-  background: var(--accent);
-  color:#04221f;
-  padding:12px 18px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  opacity:0;
-  animation:toastin 0.4s forwards, toastout 0.4s 2.4s forwards;
-}
-@keyframes toastin{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes toastout{from{opacity:1;transform:translateY(0);}to{opacity:0;transform:translateY(-20px);}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MelonTec Cloud</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
-  <div class="header">
-    <h1>MelonTec Cloud</h1>
-    <div class="nav-btns">
-      <button id="loginBtn">Login</button>
-      <button id="registerBtn">Account erstellen</button>
-      <button id="settingsBtn" style="display:none;">Einstellungen</button>
+    <header>
+        <div class="account-btn">
+            <button onclick="window.location.href='login.html'">Account</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="app-card">
+            <h2>FOTOS</h2>
+        </div>
+        <div class="app-card">
+            <h2>VIDEOS</h2>
+        </div>
+        <div class="app-card">
+            <h2>NOTIZEN</h2>
+        </div>
+        <div class="app-card">
+            <h2>APPS</h2>
+            <div class="app-item">
+                <p>Kalender</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="cloud-content">
-    <div class="tabs">
-      <button class="active" data-tab="photos">Fotos</button>
-      <button data-tab="notes">Notizen</button>
-      <button data-tab="melmail">MelMail</button>
-      <button data-tab="meldat">melDat</button>
-    </div>
-    <div class="tab-content" id="tabContent">
-      <!-- default: Fotos -->
-      <p>Hier werden deine Fotos angezeigt.</p>
-    </div>
-  </div>
-</div>
-
-<!-- Auth Modal -->
-<div class="modal-bg" id="authModal">
-  <div class="modal" id="modalContent">
-    <h2 id="modalTitle">Login</h2>
-    <input type="text" id="username" placeholder="Benutzername">
-    <input type="password" id="password" placeholder="Passwort">
-    <button id="authSubmit">Einloggen</button>
-    <small id="twoFAInfo" style="color:var(--muted); display:none;">2FA aktiviert</small>
-  </div>
-</div>
-
-<script>
-// ----- Simple Demo Auth -----
-let currentUser = null;
-let twoFAEnabled = false;
-const authModal = document.getElementById('authModal');
-const modalTitle = document.getElementById('modalTitle');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const authSubmit = document.getElementById('authSubmit');
-const settingsBtn = document.getElementById('settingsBtn');
-
-document.getElementById('loginBtn').addEventListener('click', ()=>{
-  modalTitle.innerText='Login';
-  authSubmit.innerText='Einloggen';
-  document.getElementById('twoFAInfo').style.display='none';
-  authModal.style.display='flex';
-});
-document.getElementById('registerBtn').addEventListener('click', ()=>{
-  modalTitle.innerText='Account erstellen';
-  authSubmit.innerText='Registrieren';
-  document.getElementById('twoFAInfo').style.display='none';
-  authModal.style.display='flex';
-});
-authSubmit.addEventListener('click', ()=>{
-  const user = usernameInput.value.trim();
-  const pass = passwordInput.value.trim();
-  if(!user||!pass){alert('Bitte fülle alle Felder aus.');return;}
-  currentUser = user;
-  localStorage.setItem('mtcloud_user',JSON.stringify({user:user,files:[]})); 
-  authModal.style.display='none';
-  document.querySelector('.cloud-content').style.display='flex';
-  settingsBtn.style.display='inline-block';
-  toast(`Willkommen, ${user}!`);
-  usernameInput.value=''; passwordInput.value='';
-  loadTab('photos');
-});
-
-// ----- Settings & 2FA (simuliert) -----
-settingsBtn.addEventListener('click', ()=>{
-  const enable2FA = confirm('2FA aktivieren? (Demo simuliert)');
-  twoFAEnabled = enable2FA;
-  document.getElementById('twoFAInfo').style.display = twoFAEnabled ? 'block' : 'none';
-  toast(`2FA ${twoFAEnabled?'aktiviert':'deaktiviert'}`);
-});
-
-// ----- Tabs -----
-const tabs = document.querySelectorAll('.tabs button');
-tabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    tabs.forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    loadTab(tab.dataset.tab);
-  });
-});
-const tabContent = document.getElementById('tabContent');
-function loadTab(tab){
-  if(tab==='photos'){
-    tabContent.innerHTML='<p>Hier werden deine Fotos angezeigt.</p>';
-  }else if(tab==='notes'){
-    tabContent.innerHTML='<p>Hier kannst du deine Notizen erstellen.</p>';
-  }else if(tab==='melmail'){
-    tabContent.innerHTML='<p>Hier wird deine MelMail angezeigt.</p>';
-  }else if(tab==='meldat'){
-    tabContent.innerHTML=`<div class="upload-area" id="uploadArea">Dateien hierhin ziehen oder klicken</div>
-    <div class="file-list" id="fileList"></div>`;
-    initFileUpload();
-  }
-}
-
-// ----- File Upload -----
-function initFileUpload(){
-  const uploadArea = document.getElementById('uploadArea');
-  const fileList = document.getElementById('fileList');
-  let userData = JSON.parse(localStorage.getItem('mtcloud_user')) || {files:[]};
-
-  uploadArea.addEventListener('click',()=>{ 
-    const input = document.createElement('input'); input.type='file'; input.multiple=true;
-    input.onchange=e=>handleFiles(e.target.files); input.click();
-  });
-  uploadArea.addEventListener('dragover',e=>{e.preventDefault(); uploadArea.style.background='rgba(95,224,200,0.2)';});
-  uploadArea.addEventListener('dragleave',e=>{uploadArea.style.background='none';});
-  uploadArea.addEventListener('drop',e=>{e.preventDefault(); uploadArea.style.background='none'; handleFiles(e.dataTransfer.files);});
-
-  function handleFiles(files){
-    Array.from(files).forEach(file=>{
-      const reader = new FileReader();
-      reader.onload = (e)=>{
-        userData.files.push({name:file.name,data:e.target.result,type:file.type});
-        renderFiles();
-        localStorage.setItem('mtcloud_user',JSON.stringify(userData));
-        toast(`Datei "${file.name}" hochgeladen!`);
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function renderFiles(){
-    fileList.innerHTML='';
-    userData.files.forEach((f,i)=>{
-      const div = document.createElement('div'); div.className='file-item';
-      div.innerHTML=`<span>${f.name}</span><button onclick="downloadFile(${i})">Download</button>`;
-      fileList.appendChild(div);
-    });
-  }
-  window.downloadFile = function(i){
-    const f = userData.files[i];
-    const a = document.createElement('a');
-    a.href=f.data; a.download=f.name; a.click();
-  }
-  renderFiles();
-}
-
-// ----- Toast -----
-function toast(msg){
-  const t = document.createElement('div'); t.className='toast'; t.innerText=msg;
-  document.body.appendChild(t);
-  setTimeout(()=>document.body.removeChild(t),3000);
-}
-</script>
+    <script src="app.js"></script>
 </body>
 </html>
+
