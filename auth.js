@@ -1,4 +1,4 @@
-const API = "https://DEIN-BACKEND.onrender.com/api";
+const API = "https://akvxpfihgfppvkmkycvg.supabase.co";
 
 function login() {
   fetch(`${API}/login`, {
