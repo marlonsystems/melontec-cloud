@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MelonTec Cloud</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="email" id="email" placeholder="E-Mail" required>
-            <input type="password" id="password" placeholder="Passwort" required>
-            <button type="submit">Anmelden</button>
-        </form>
-        <p>Noch keinen Account? <a href="register.html">Jetzt registrieren</a></p>
-    </div>
-    <script src="auth.js"></script>
+
+<div class="card" style="width:340px;margin:100px auto;flex-direction:column;">
+<h2>Login</h2>
+<input id="email" placeholder="E-Mail">
+<input id="password" type="password" placeholder="Passwort">
+<button onclick="login()">Anmelden</button>
+</div>
+
+<script src="auth.js"></script>
 </body>
 </html>
