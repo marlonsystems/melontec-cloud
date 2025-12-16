@@ -1,48 +1,29 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const User = require('./models/User');
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const User = require("./models/User");
 
 const app = express();
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/melontec-cloud', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI);
 
-// User Registration
-app.post('/api/register', async (req, res) => {
-    const { username, email, password } = req.body;
-    
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
-    const newUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
-    
-    res.json({ success: true });
+app.post("/api/register", async (req,res)=>{
+  const hash = await bcrypt.hash(req.body.password,10);
+  await User.create({ email:req.body.email, password:hash });
+  res.json({ ok:true });
 });
 
-// User Login
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
-    
-    const user = await User.findOne({ email });
-    
-    if (!user) {
-        return res.status(400).json({ error: "User not found" });
-    }
+app.post("/api/login", async (req,res)=>{
+  const user = await User.findOne({ email:req.body.email });
+  if(!user) return res.sendStatus(401);
 
-    const isMatch = await bcrypt.compare(password, user.password);
+  const ok = await bcrypt.compare(req.body.password, user.password);
+  if(!ok) return res.sendStatus(401);
 
-    if (!isMatch) {
-        return res.status(400).json({ error: "Invalid password" });
-    }
-
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
-    
-    res.json({ token });
+  const token = jwt.sign({ id:user._id }, process.env.JWT_SECRET);
+  res.json({ token });
 });
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
-});
+app.listen(3000);
