@@ -1,20 +1,26 @@
-const API = "https://akvxpfihgfppvkmkycvg.supabase.co";
-
-function login() {
-  fetch(`${API}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: email.value,
-      password: password.value
-    })
-  })
-  .then(r => r.json())
-  .then(d => {
-    if (d.token) {
-      localStorage.setItem("token", d.token);
-      location.href = "index.html";
-    } else alert("Login fehlgeschlagen");
+<script>
+async function login() {
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
   });
+
+  if (error) alert(error.message);
+  else location.href = "index.html";
 }
 
+async function register() {
+  const { error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value
+  });
+
+  if (error) alert(error.message);
+  else alert("Account erstellt – bitte einloggen");
+}
+
+async function logout() {
+  await supabase.auth.signOut();
+  location.href = "login.html";
+}
+</script>
