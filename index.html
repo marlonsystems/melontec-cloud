@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MelonTec Cloud</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
 <header>
-  <div class="account" id="accountBtn">Account</div>
+  <button onclick="logout()">Logout</button>
 </header>
 
 <main class="grid">
-  <div class="card fotos">FOTOS</div>
-  <div class="card videos">VIDEOS</div>
-  <div class="card notes">NOTIZEN</div>
-  <div class="card apps">
-    <h3>APPS</h3>
-    <span>Kalender</span>
-  </div>
+  <div class="glass card">FOTOS</div>
+  <div class="glass card">VIDEOS</div>
+  <div class="glass card" onclick="loadNotes()">NOTIZEN</div>
 </main>
 
-<script src="app.js"></script>
+<div id="notes"></div>
+
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="notes.js"></script>
+<script>
+supabase.auth.getUser().then(({ data }) => {
+  if (!data.user) location.href = "login.html";
+});
+</script>
 </body>
 </html>
-
-
