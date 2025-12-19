@@ -1,9 +1,6 @@
-const token = localStorage.getItem("token");
-const accountBtn = document.getElementById("accountBtn");
-
-if (token) {
-  accountBtn.textContent = "Profil";
-} else {
-  accountBtn.textContent = "Login";
-  accountBtn.onclick = () => location.href = "login.html";
+function openPage(url) {
+  document.body.style.opacity = 0;
+  setTimeout(() => {
+    window.location.href = url;
+  }, 400);
 }
